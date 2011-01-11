@@ -1,6 +1,4 @@
-function roll() {
-  var dice = parseInt($("#dice-number").val(), 10);
-  var explode = $("#explode").val() === "on" ? true : false;
+function calculate_eyes(dice, explode) {
   var successes = 0;
   var ones = 0;
 
@@ -28,8 +26,35 @@ function roll() {
   }
   console.log("Glitch", glitch, "critical", critical);
 
+  return [successes, glitch, critical];
+}
+
+function roll() {
+  var dice = parseInt($("#dice-number").val(), 10);
+  var explode = $("#explode").val() === "on" ? true : false;
+
+  var computed = calculate_eyes(dice, explode);
+  display_values(computed);
+
   // do not allow submit
   return false;
+}
+
+function display_values(computed) {
+  var successes = computed[0];
+  var glitch = computed[1];
+  var critical = computed[2];
+
+  $(".notification").hide();
+
+  var element = undefined;
+
+  if (glitch) {
+    element = $(".error");
+  } else {
+    element = $(".success");
+  }
+  element.show();
 }
 
 function randrange(min, max) {
