@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shadowrun dice</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript">
+    $(document).bind("mobileinit", function() {
+      $.extend($.mobile, {
+        ajaxFormsEnabled: false
+      });
+    });
+    </script>
+    <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
+    <script type="text/javascript">
+    function roll() {
+      var dice = parseInt($("#dice-number").val(), 10);
+      var explode = $("#explode").val() === "on" ? true : false;
+      var successes = 0;
+      var ones = 0;
+
+      for (var remaining = dice; remaining > 0; remaining--) {
+        var rolled = randrange(1, 6);
+        if (rolled === 5) {
+          successes += 1;
+        } else if (rolled === 6) {
+          successes += 1;
+          if (explode) {
+            remaining += 1;
+          }
+        } else if (rolled === 1) {
+          ones += 1;
+        }
+      }
+
+      console.log("Successes", successes, "ones", ones, "dice", dice);
+
+      var glitch = false;
+      var critical = false;
+      if (ones > (dice / 2)) {
+        glitch = true;
+        critical = !successes ? true : false;
+      }
+      console.log("Glitch", glitch, "critical", critical);
+
+      // do not allow submit
+      return false;
+    }
+
+    function randrange(min, max) {
+      var range = max + 1 - min;
+      return Math.floor(Math.random() * range + min);
+    }
+
+    $(function () {
+      // onload: bind calculation function to submit
+      $("#parameter-configuration").submit(roll);
+    });
+    </script>
+    <style type="text/css">
+    .notification {
+      margin-top: 1.5em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      padding-left: 0.5em;
+
+      display: none;
+    }
+
+    .error {
+      border: 1px solid red;
+      background-color: #ff8484;
+    }
+
+    .success {
+      border: 1px solid green;
+      background-color: #84ff84;
+    }
+    </style>
+  </head>
+  <body>
+    <div data-role="page">
+      <div data-role="header">Shadowrun dice generator</div>
+      <div data-role="content">
+        <form action="" method="get" id="parameter-configuration">
+          <div data-role="fieldcontain">
+            <label for="dice-number">Dice: </label>
+            <input type="range" name="dice-number" id="dice-number" value="10"
+              min="1" max="50" />
+          </div>
+          <div data-role="fieldcontain">
+            <label for="explode">Explode sixes: </label>
+            <select name="explode" id="explode" data-role="slider">
+              <option value="off">Off</option>
+              <option value="on">On</option>
+            </select>
+          </div>
+          <div data-role="fieldcontain">
+            <input type="submit" name="roll-dice" id="roll-dice" value="Roll"
+              data-icon="refresh" />
+          </div>
+        </form>
+        <div class="notification error">
+         Glitch, critical
+        </div>
+        <div class="notification success">
+         Ok.
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
