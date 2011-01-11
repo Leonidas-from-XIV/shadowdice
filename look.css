@@ -1,0 +1,18 @@
+.notification {
+  margin-top: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 0.5em;
+
+  display: none;
+}
+
+.error {
+  border: 1px solid red;
+  background-color: #ff8484;
+}
+
+.success {
+  border: 1px solid green;
+  background-color: #84ff84;
+}
