@@ -40,22 +40,33 @@ function roll() {
   var computed = calculate_eyes(dice, explode);
   display_values(computed);
 
-  // do not allow submit
+  /* do not allow submit */
   return false;
 }
 
 function display_values(result) {
-  $(".notification").hide();
+  /* get the previous div with the results */
+  var dialog = $(".notification:visible");
+  /* a function that fades in the current result */
+  var showResults = function () {
+    var element;
 
-  var element;
+    if (result.glitch) {
+      element = $(".error");
+    } else {
+      element = $(".success");
+    }
+    element.text(format_values(result));
+    element.fadeIn();
+  };
 
-  if (result.glitch) {
-    element = $(".error");
+  /* if there was a previous result, fade it out before, otherwise just fade
+   * in, without any preprocessing. solves "double fadeIn"-bug */
+  if (dialog.length) {
+    dialog.fadeOut(undefined, showResults);
   } else {
-    element = $(".success");
+    showResults();
   }
-  element.text(format_values(result));
-  element.show();
 }
 
 function format_values(result) {
