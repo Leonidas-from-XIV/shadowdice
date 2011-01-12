@@ -26,7 +26,7 @@ function calculate_eyes(dice, explode) {
 
   if (result.ones > (dice / 2)) {
     result.glitch = true;
-    result.critical = !result.successes ? true : false;
+    result.critical = !!result.successes;
   }
   console.log("Glitch", result.glitch, "critical", result.critical);
 
@@ -35,7 +35,7 @@ function calculate_eyes(dice, explode) {
 
 function roll() {
   var dice = parseInt($("#dice-number").val(), 10);
-  var explode = $("#explode").val() === "on" ? true : false;
+  var explode = $("#explode").val() === "on";
 
   var computed = calculate_eyes(dice, explode);
   display_values(computed);
