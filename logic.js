@@ -70,9 +70,12 @@ function display_values(result) {
 }
 
 function format_values(result) {
-  var message = result.successes.toString() + " successes rolled.";
+  var successes = result.successes === 1 ? "success" : "successes";
+  var ones = result.ones === 1 ? "one" : "ones";
+
+  var message = result.successes.toString() + " " + successes + " rolled.";
   if (result.glitch) {
-    message += " " + result.ones.toString() + " ones rolled, therefore ";
+    message += " " + result.ones.toString() + " " + ones + " rolled, therefore ";
     if (result.critical) {
       message += "critical";
     } else {
