@@ -8,3 +8,6 @@ $(document).bind("mobileinit", function() {
     ajaxFormsEnabled: false
   });
 });
+
+/* firebug "emulation" */
+var console = console || { log: function() {} }
