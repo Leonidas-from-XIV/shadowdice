@@ -1,32 +1,36 @@
 function calculate_eyes(dice, explode) {
-  var successes = 0;
-  var ones = 0;
+  var result = {
+    successes: 0,
+    ones: 0,
+    glitch: false,
+    critical: false
+  };
+  result.successes = 0;
+  result.ones = 0;
 
   for (var remaining = dice; remaining > 0; remaining--) {
     var rolled = randrange(1, 6);
     if (rolled === 5) {
-      successes += 1;
+      result.successes += 1;
     } else if (rolled === 6) {
-      successes += 1;
+      result.successes += 1;
       if (explode) {
         remaining += 1;
       }
     } else if (rolled === 1) {
-      ones += 1;
+      result.ones += 1;
     }
   }
 
-  console.log("Successes", successes, "ones", ones, "dice", dice);
+  console.log("Successes", result.successes, "ones", result.ones, "dice", dice);
 
-  var glitch = false;
-  var critical = false;
-  if (ones > (dice / 2)) {
-    glitch = true;
-    critical = !successes ? true : false;
+  if (result.ones > (dice / 2)) {
+    result.glitch = true;
+    result.critical = !result.successes ? true : false;
   }
-  console.log("Glitch", glitch, "critical", critical);
+  console.log("Glitch", result.glitch, "critical", result.critical);
 
-  return [successes, glitch, critical];
+  return result;
 }
 
 function roll() {
@@ -40,21 +44,32 @@ function roll() {
   return false;
 }
 
-function display_values(computed) {
-  var successes = computed[0];
-  var glitch = computed[1];
-  var critical = computed[2];
-
+function display_values(result) {
   $(".notification").hide();
 
-  var element = undefined;
+  var element;
 
-  if (glitch) {
+  if (result.glitch) {
     element = $(".error");
   } else {
     element = $(".success");
   }
+  element.text(format_values(result));
   element.show();
+}
+
+function format_values(result) {
+  var message = result.successes.toString() + " successes rolled.";
+  if (result.glitch) {
+    message += " " + result.ones.toString() + " ones rolled, therefore ";
+    if (result.critical) {
+      message += "critical";
+    } else {
+      message += "glitch";
+    }
+    message += ".";
+  }
+  return message;
 }
 
 function randrange(min, max) {
