@@ -10,4 +10,6 @@ $(document).bind("mobileinit", function() {
 });
 
 /* firebug "emulation" */
-var console = console || { log: function() {} }
+if (typeof console === "undefined") {
+  var console = { log: function() {} };
+}
