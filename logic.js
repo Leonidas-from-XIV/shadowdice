@@ -1,4 +1,7 @@
-function calculate_eyes(dice, explode) {
+/* pollute the namespace with as few names as possible */
+var ShadowDice = {};
+
+ShadowDice.calculate_eyes = function (dice, explode) {
   var result = {
     successes: 0,
     ones: 0,
@@ -9,7 +12,7 @@ function calculate_eyes(dice, explode) {
   result.ones = 0;
 
   for (var remaining = dice; remaining > 0; remaining--) {
-    var rolled = randrange(1, 6);
+    var rolled = ShadowDice.randrange(1, 6);
     if (rolled === 5) {
       result.successes += 1;
     } else if (rolled === 6) {
@@ -31,20 +34,20 @@ function calculate_eyes(dice, explode) {
   console.log("Glitch", result.glitch, "critical", result.critical);
 
   return result;
-}
+};
 
-function roll() {
+ShadowDice.roll = function () {
   var dice = parseInt($("#dice-number").val(), 10);
   var explode = $("#explode").val() === "on";
 
-  var computed = calculate_eyes(dice, explode);
-  display_values(computed);
+  var computed = ShadowDice.calculate_eyes(dice, explode);
+  ShadowDice.display_values(computed);
 
   /* do not allow submit */
   return false;
-}
+};
 
-function display_values(result) {
+ShadowDice.display_values = function (result) {
   /* get the previous div with the results */
   var dialog = $(".notification:visible");
   /* a function that fades in the current result */
@@ -56,7 +59,7 @@ function display_values(result) {
     } else {
       element = $(".success");
     }
-    element.text(format_values(result));
+    element.text(ShadowDice.format_values(result));
     element.fadeIn();
   };
 
@@ -67,9 +70,9 @@ function display_values(result) {
   } else {
     showResults();
   }
-}
+};
 
-function format_values(result) {
+ShadowDice.format_values = function (result) {
   var successes = result.successes === 1 ? "success" : "successes";
   var ones = result.ones === 1 ? "one" : "ones";
 
@@ -84,14 +87,14 @@ function format_values(result) {
     message += ".";
   }
   return message;
-}
+};
 
-function randrange(min, max) {
+ShadowDice.randrange = function (min, max) {
   var range = max + 1 - min;
   return Math.floor(Math.random() * range + min);
-}
+};
 
 $(function () {
   // onload: bind calculation function to submit
-  $("#parameter-configuration").submit(roll);
+  $("#parameter-configuration").submit(ShadowDice.roll);
 });
