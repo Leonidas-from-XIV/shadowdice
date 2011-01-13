@@ -40,11 +40,36 @@ ShadowDice.roll = function () {
   var dice = parseInt($("#dice-number").val(), 10);
   var explode = $("#explode").val() === "on";
 
+  ShadowDice.play_roll();
   var computed = ShadowDice.calculate_eyes(dice, explode);
   ShadowDice.display_values(computed);
+  ShadowDice.play_outcome(computed);
 
   /* do not allow submit */
   return false;
+};
+
+ShadowDice.play = function (audio) {
+  var html5audio = !!(document.createElement('audio').canPlayType);
+  if (html5audio) {
+    audio[0].play();
+  } else {
+    /* phonegap fallback */
+  }
+};
+
+ShadowDice.play_roll = function () {
+  ShadowDice.play($("#roll-dice-jingle"));
+}
+
+ShadowDice.play_outcome = function (result) {
+  if (result.glitch) {
+    if (result.critical) {
+      ShadowDice.play($("#critical-jingle"));
+    } else {
+      ShadowDice.play($("#glitch-jingle"));
+    }
+  }
 };
 
 ShadowDice.display_values = function (result) {
