@@ -29,7 +29,7 @@ ShadowDice.calculate_eyes = function (dice, explode) {
 
   if (result.ones > (dice / 2)) {
     result.glitch = true;
-    result.critical = !!result.successes;
+    result.critical = !result.successes;
   }
   console.log("Glitch", result.glitch, "critical", result.critical);
 
