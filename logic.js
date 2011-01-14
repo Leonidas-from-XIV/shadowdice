@@ -27,7 +27,9 @@ ShadowDice.calculate_eyes = function (dice, explode) {
 
   console.log("Successes", result.successes, "ones", result.ones, "dice", dice);
 
-  if (result.ones > (dice / 2)) {
+  /* according to SR4.1 rules, a glitch is when the number of 1 is at least half
+   * of the number of thrown dice */
+  if (result.ones >= (dice / 2)) {
     result.glitch = true;
     result.critical = !result.successes;
   }
