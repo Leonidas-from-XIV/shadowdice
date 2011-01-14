@@ -105,11 +105,9 @@ ShadowDice.format_values = function (result) {
   if (result.glitch) {
     message += " " + result.ones.toString() + " " + ones + " rolled, therefore ";
     if (result.critical) {
-      message += "critical";
-    } else {
-      message += "glitch";
+      message += "critical ";
     }
-    message += ".";
+    message += "glitch.";
   }
   return message;
 };
