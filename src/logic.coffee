@@ -31,7 +31,6 @@ roll = ->
   explode = $("#explode").val() == "on"
   playRoll()
   computed = calculateEyes dice, explode
-  console.log computed
   displayValues computed
   playOutcome computed
 
