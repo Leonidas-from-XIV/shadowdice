@@ -1,4 +1,4 @@
-ShadowDice:
+ShadowDice =
   calculateEyes: (dice, explode) ->
     result =
       successes: 0
