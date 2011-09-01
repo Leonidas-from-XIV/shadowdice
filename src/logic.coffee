@@ -76,5 +76,5 @@ playOutcome = (result) ->
   if result.glitch
     play $ if result.critical then "#critical-jingle" else "#glitch-jingle"
 
-$ ->
+$("#main-page").live "pagecreate", ->
   $("#parameter-configuration").submit roll
