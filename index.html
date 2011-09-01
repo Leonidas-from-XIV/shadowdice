@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Shadowrun dice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
     <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
     <script src="lib/preconfig.js"></script>
@@ -27,12 +28,12 @@
       <div data-role="content">
         <form action="" method="get" id="parameter-configuration">
           <div data-role="fieldcontain">
-            <label for="dice-number">Dice: </label>
+            <label for="dice-number">Dice:</label>
             <input type="range" name="dice-number" id="dice-number" value="10"
               min="1" max="50" />
           </div>
           <div data-role="fieldcontain">
-            <label for="explode">Explode sixes: </label>
+            <label for="explode">Explode sixes:</label>
             <select name="explode" id="explode" data-role="slider">
               <option value="off">Off</option>
               <option value="on">On</option>
