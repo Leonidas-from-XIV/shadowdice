@@ -72,9 +72,9 @@ formatValues = (result) ->
   successes = if result.successes == 1 then "success" else "successes"
   ones = if result.ones == 1 then "one" else "ones"
 
-  message = result.successes.toString() + " " + successes + " rolled."
+  message = "#{ result.successes } #{ successes } rolled."
   if result.glitch
-    message += " " + result.ones.toString() + " " + ones + " rolled, therefore "
+    message += " #{ result.ones } rolled, therefore "
     if result.critical
       message += "critical "
     message += "glitch."
