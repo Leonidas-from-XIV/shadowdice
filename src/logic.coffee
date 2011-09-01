@@ -19,11 +19,27 @@ ShadowDice =
       console.log "Successes", result.successes, "ones", result.ones, "dice", dice
   
   randRange: (min, max) ->
-    range = max + 1 - min;
-    Math.floor(Math.random() * range + min);
+    range = max + 1 - min
+    Math.floor(Math.random() * range + min)
     
   roll: ->
-    alert "yei"
+    dice = parseInt $("#dice-number").val(), 10
+    explode = $("#explode").val() == "on"
+    ShadowDice.playRoll()
+    computed = ShadowDice.calculateEyes dice, explode
+    #ShadowDice.display_values(computed);
+    #ShadowDice.play_outcome(computed);
+
+    # do not allow submit
+    false
+
+  playRoll: ->
+    ShadowDice.play $("#roll-dice-jingle")
+
+  play: (audio) ->
+    html5audio = !!(document.createElement('audio').canPlayType)
+    audio[0].play() if html5audio
+    # else phonegap fallback
 
 $ ->
   $("#parameter-configuration").submit ShadowDice.roll
