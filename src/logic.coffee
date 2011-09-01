@@ -8,8 +8,8 @@ ShadowDice =
       
     for remaining in [dice...0]
       rolled = ShadowDice.randRange 1, 6
-      console.log remaining
-      switch remaining
+      console.log rolled
+      switch rolled
         when 5 then result.successes++
         when 6
           result.successes++
@@ -17,11 +17,18 @@ ShadowDice =
         when 1 then result.ones++
       
     console.log "Successes", result.successes, "ones", result.ones, "dice", dice
+    # according to SR4.1 rules, a glitch is when the number of 1 is at least half
+    # of the number of thrown dice
+    if result.ones >= (dice / 2)
+      result.glitch = true
+      result.critical = !result.successes
+
+    console.log "Glitch", result.glitch, "critical", result.critical
     result
   
   randRange: (min, max) ->
     range = max + 1 - min
-    Math.floor(Math.random() * range + min)
+    Math.floor Math.random() * range + min
     
   roll: ->
     dice = parseInt $("#dice-number").val(), 10
