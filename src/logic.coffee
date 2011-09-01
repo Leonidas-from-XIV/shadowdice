@@ -7,7 +7,7 @@ ShadowDice =
       critical: false
       
     for remaining in [dice...0]
-      rolled = ShadowDice.randRange(1, 6);
+      rolled = ShadowDice.randRange 1, 6
       console.log remaining
       switch remaining
         when 5 then result.successes++
@@ -29,8 +29,8 @@ ShadowDice =
     ShadowDice.playRoll()
     computed = ShadowDice.calculateEyes dice, explode
     console.log computed
-    #ShadowDice.display_values(computed);
-    #ShadowDice.play_outcome(computed);
+    ShadowDice.displayValues computed
+    ShadowDice.playOutcome computed
 
     # do not allow submit
     false
@@ -61,6 +61,25 @@ ShadowDice =
       dialog.fadeOut undefined, showResults
     else
       showResults()
+
+  formatValues: (result) ->
+    successes = if result.successes == 1 then "success" else "successes"
+    ones = if result.ones == 1 then "one" else "ones"
+
+    message = result.successes.toString() + " " + successes + " rolled."
+    if result.glitch
+      message += " " + result.ones.toString() + " " + ones + " rolled, therefore "
+      if result.critical
+        message += "critical "
+      message += "glitch."
+    message
+
+  playOutcome: (result) ->
+    if result.glitch
+      if result.critical
+        ShadowDice.play $ "#critical-jingle"
+      else
+        ShadowDice.play $ "#glitch-jingle"
 
 $ ->
   $("#parameter-configuration").submit ShadowDice.roll
