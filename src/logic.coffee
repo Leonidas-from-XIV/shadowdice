@@ -39,7 +39,7 @@ roll = ->
   false
 
 playRoll = ->
-  play $("#roll-dice-jingle")
+  play $ "#roll-dice-jingle"
 
 play = (audio) ->
   html5audio = !!(document.createElement('audio').canPlayType)
@@ -51,10 +51,7 @@ displayValues = (result) ->
   dialog = $ ".notification:visible"
   # a function that fades in the current result
   showResults = ->
-    if result.glitch
-      element = $ ".error"
-    else
-      element = $ ".success"
+    element = $ if result.glitch then ".error" else ".success"
     element.text formatValues result
     element.fadeIn()
 
@@ -72,17 +69,13 @@ formatValues = (result) ->
   message = "#{ result.successes } #{ successes } rolled."
   if result.glitch
     message += " #{ result.ones } rolled, therefore "
-    if result.critical
-      message += "critical "
+    message += "critical " if result.critical
     message += "glitch."
   message
 
 playOutcome = (result) ->
   if result.glitch
-    if result.critical
-      play $ "#critical-jingle"
-    else
-      play $ "#glitch-jingle"
+    play $ if result.critical then "#critical-jingle" else "#glitch-jingle"
 
 $ ->
   $("#parameter-configuration").submit roll
