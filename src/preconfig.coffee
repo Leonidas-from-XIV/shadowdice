@@ -1,6 +1,6 @@
 $(document).bind 'mobileinit', ->
-  # disable AJAX on forms, otherwise binding to submit breaks
-  $.extend $.mobile, ajaxFormsEnabled: false
+  # disable AJAX otherwise binding to submit breaks
+  $.extend $.mobile, ajaxEnabled: false
 
 # create our own log function stub if unavailable
 #(window.console = log: ->) if window.console?
