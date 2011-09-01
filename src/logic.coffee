@@ -41,7 +41,7 @@ playRoll = ->
   play $ "#roll-dice-jingle"
 
 play = (audio) ->
-  html5audio = !!(document.createElement('audio').canPlayType)
+  html5audio = Modernizr.audio.ogg or Modernizr.audio.mp3 or Modernizr.audio.wav
   audio[0].play() if html5audio
   # else phonegap fallback
 
